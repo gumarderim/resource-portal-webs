@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>信息卡片 · 雷速</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f8fafb;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            color: #1e293b;
+            line-height: 1.65;
+            padding: 2.5rem 1.25rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .page {
+            max-width: 680px;
+            width: 100%;
+        }
+
+        /* 主视觉 — 干净的信息卡片区 */
+        .hero-card {
+            background: #ffffff;
+            border-radius: 28px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02), 0 1px 4px rgba(0, 0, 0, 0.04);
+            padding: 2.5rem 2rem;
+            margin-bottom: 2.5rem;
+            border: 1px solid #edf2f7;
+        }
+
+        .hero-label {
+            display: inline-block;
+            font-size: 0.7rem;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: #5b6c84;
+            background: #eef2f6;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            margin-bottom: 1.25rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 500;
+            letter-spacing: -0.01em;
+            color: #0b1a2c;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .hero-text {
+            font-size: 1rem;
+            color: #2c3e50;
+            margin-bottom: 0.75rem;
+            max-width: 580px;
+        }
+
+        .hero-link-sentence {
+            font-size: 0.95rem;
+            background: #f1f5f9;
+            padding: 0.8rem 1.2rem;
+            border-radius: 60px;
+            display: inline-block;
+            margin-top: 1rem;
+        }
+
+        .hero-link-sentence a {
+            color: #1a4972;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px solid #b9cdde;
+        }
+
+        .hero-link-sentence a:hover {
+            border-bottom-color: #1a4972;
+        }
+
+        /* 用途卡片网格 */
+        .card-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .card-item {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 1.5rem 1.25rem;
+            border: 1px solid #eef2f6;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.01);
+            transition: box-shadow 0.15s, transform 0.1s;
+        }
+
+        .card-item:hover {
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+            transform: translateY(-2px);
+        }
+
+        .card-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .card-title {
+            font-weight: 500;
+            font-size: 1.05rem;
+            margin-bottom: 0.3rem;
+            color: #0b1a2c;
+        }
+
+        .card-desc {
+            font-size: 0.9rem;
+            color: #475569;
+            line-height: 1.5;
+        }
+
+        /* 适合人群 */
+        .audience-section {
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 2rem 2rem;
+            margin-bottom: 2.5rem;
+            border: 1px solid #edf2f7;
+        }
+
+        .section-label {
+            font-size: 0.8rem;
+            letter-spacing: 0.03em;
+            color: #64748b;
+            margin-bottom: 0.6rem;
+            font-weight: 400;
+        }
+
+        h2 {
+            font-size: 1.35rem;
+            font-weight: 500;
+            color: #0b1a2c;
+            margin-bottom: 1rem;
+            letter-spacing: -0.01em;
+        }
+
+        .tag-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.7rem 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .tag {
+            background: #f1f5f9;
+            padding: 0.3rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            color: #1e293b;
+        }
+
+        .audience-note {
+            font-size: 0.92rem;
+            color: #3b4e66;
+            border-left: 3px solid #cbd5e1;
+            padding-left: 1rem;
+            margin-top: 0.8rem;
+        }
+
+        /* 自然链接段落 */
+        .link-paragraph {
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 2rem 2rem;
+            margin-bottom: 2.5rem;
+            border: 1px solid #edf2f7;
+        }
+
+        .link-paragraph p {
+            margin-bottom: 1rem;
+            font-size: 0.98rem;
+            color: #1f2a3e;
+        }
+
+        .link-paragraph a {
+            color: #1a4b77;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px solid #cbdbe9;
+        }
+
+        .link-paragraph a:hover {
+            border-bottom-color: #1a4b77;
+        }
+
+        .link-paragraph p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* FAQ 摘要简洁 */
+        .faq-mini {
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 1.8rem 2rem;
+            border: 1px solid #edf2f7;
+            margin-bottom: 2.5rem;
+        }
+
+        .faq-item {
+            margin-bottom: 1.2rem;
+        }
+
+        .faq-q {
+            font-weight: 500;
+            color: #0b1a2c;
+            margin-bottom: 0.2rem;
+        }
+
+        .faq-a {
+            font-size: 0.92rem;
+            color: #3a4c62;
+        }
+
+        .faq-item:last-child {
+            margin-bottom: 0;
+        }
+
+        hr {
+            border: 0;
+            height: 1px;
+            background: #e2e8f0;
+            margin: 1.8rem 0 2rem;
+        }
+
+        .footer-note {
+            font-size: 0.8rem;
+            color: #7c8ba0;
+            text-align: center;
+            padding: 0.5rem 0 1.5rem;
+        }
+
+        /* 响应式 */
+        @media (max-width: 540px) {
+            body {
+                padding: 1.5rem 0.75rem;
+            }
+            .hero-card {
+                padding: 1.8rem 1.2rem;
+            }
+            h1 {
+                font-size: 1.6rem;
+            }
+            .card-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            .audience-section,
+            .link-paragraph,
+            .faq-mini {
+                padding: 1.5rem 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+
+    <!-- 主视觉卡片 -->
+    <div class="hero-card">
+        <span class="hero-label">信息面板</span>
+        <h1>日常查询 · 对照 · 延伸阅读</h1>
+        <p class="hero-text">
+            不论是检索赛事数据、对比历史纪录，还是浏览资讯摘要，一个清晰的信息起点能省下不少时间。
+            很多时候我们只是需要快速定位到可靠的内容，再决定下一步。
+        </p>
+        <p class="hero-text">
+            这次整理围绕「查询、对照、延伸阅读」三个日常动作展开，以卡片形式呈现。
+            关于更完整的资讯与数据，你可以通过 <a href="https://page-h5-leisu.com" style="color:#1a4972; text-decoration:underline; text-underline-offset:3px; font-weight:500;">雷速</a> 做进一步查阅。
+        </p>
+    </div>
+
+    <!-- 用途卡片 × 4 -->
+    <div class="card-grid">
+        <div class="card-item">
+            <span class="card-icon">📋</span>
+            <div class="card-title">快速对照</div>
+            <div class="card-desc">并排查看不同场次的基础信息，方便横向比较数据或状态。</div>
+        </div>
+        <div class="card-item">
+            <span class="card-icon">🔍</span>
+            <div class="card-title">关键词查询</div>
+            <div class="card-desc">按队伍、日期、联赛等关键词筛选，定位具体内容。</div>
+        </div>
+        <div class="card-item">
+            <span class="card-icon">📎</span>
+            <div class="card-title">延伸阅读</div>
+            <div class="card-desc">从某一项记录出发，关联相关的背景文章或统计列表。</div>
+        </div>
+        <div class="card-item">
+            <span class="card-icon">🧷</span>
+            <div class="card-title">信息归档</div>
+            <div class="card-desc">按周或按月整理的摘要，适合回顾和记录。</div>
+        </div>
+    </div>
+
+    <!-- 适合人群 -->
+    <div class="audience-section">
+        <div class="section-label">适合谁用</div>
+        <h2>日常需要查资料、做对照的人</h2>
+        <div class="tag-list">
+            <span class="tag">爱好者</span>
+            <span class="tag">资讯浏览者</span>
+            <span class="tag">数据对照者</span>
+            <span class="tag">偶尔查阅者</span>
+        </div>
+        <div class="audience-note">
+            不论你是快速浏览还是认真比对，只要不想被冗余信息干扰，这种卡片式结构都能直接展示核心内容。
+            它不追求面面俱到，而是让每次查询都有明确的落脚点。
+        </div>
+    </div>
+
+    <!-- 自然链接段落（嵌入链接） -->
+    <div class="link-paragraph">
+        <p>
+            在整理资料时，我发现很多查询其实只需要一个稳定的起点。比如想回顾某支队伍近期的表现，
+            或者对比不同阶段的统计，这时候有一个结构清晰的来源会方便很多。
+            如果你也需要这类日常查询，不妨试试 <a href="https://page-h5-leisu.com">雷速</a> 作为出发点。
+        </p>
+        <p>
+            另外，在延伸阅读方面，很多人会从一条数据跳到另一条相关记录。这种非线性的浏览方式，
+            要求页面本身足够简洁，把注意力留给内容本身。从实际体验来看，<a href="https://page-h5-leisu.com">雷速</a>
+            的信息组织方式比较适合这种阅读节奏。
+        </p>
+    </div>
+
+    <!-- FAQ 摘要 -->
+    <div class="faq-mini">
+        <h2 style="font-size:1.2rem; margin-bottom:1rem;">常见疑问摘要</h2>
+        <div class="faq-item">
+            <div class="faq-q">— 这些卡片数据会实时更新吗？</div>
+            <div class="faq-a">具体更新频率取决于数据源。卡片展示的是信息框架，最新内容建议以实际页面为准。</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">— 可以只用手机浏览吗？</div>
+            <div class="faq-a">可以，页面在窄屏下会自动调整卡片排列和间距。</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">— 如何延伸阅读更多相关条目？</div>
+            <div class="faq-a">从具体卡片或链接出发，通常能自然找到关联内容。你也可以直接使用搜索功能。</div>
+        </div>
+    </div>
+
+    <hr>
+    <div class="footer-note">
+        信息卡片 · 整理版 | 日常查询、对照与延伸阅读
+    </div>
+</div>
+</body>
+</html>
